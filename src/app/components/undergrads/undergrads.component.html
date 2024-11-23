@@ -2,3 +2,8 @@
 <ul>
   <li *ngFor="let undergrad of undergradsList">{{ undergrad.name }}</li>
 </ul>
+
+<!-- trigger function to emit data to parent component -->
+<button (click)="sendInfoToParent()" class="btn btn-secondary">
+  Send Child Data
+</button>

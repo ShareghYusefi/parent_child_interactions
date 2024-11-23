@@ -31,4 +31,10 @@ export class StudentsComponent {
     // filter students by level of undergrad
     return this.students.filter((student) => student.level === 'undergrad');
   }
+
+  text: any = '';
+
+  alertMessage(message: string) {
+    this.text = message;
+  }
 }
