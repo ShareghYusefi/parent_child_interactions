@@ -1,9 +1,9 @@
 <!-- we can pass in the undergradStudents array to the undergrads component input propery of undergradsList -->
 <!-- within parent component, we can respond to child event -->
-<!-- $event is a reserved keyword that captures the event object and the data pased from the child component -->
+<!-- $event is a reserved keyword that captures the event object and the data passed from the child component -->
 <undergrads
   [undergradsList]="undergradStudents"
-  (childEvent)="alertMessage($event)"
+  (deleteEvent)="deleteStudent($event)"
 ></undergrads>
 
 <h2>

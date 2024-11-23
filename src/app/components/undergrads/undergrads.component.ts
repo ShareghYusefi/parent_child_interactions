@@ -9,11 +9,11 @@ export class UndergradsComponent {
   // accept an array of students using @Input() decorator
   @Input() public undergradsList: any;
 
-  // defined childEvent to emit event to parent component
-  @Output() public childEvent = new EventEmitter();
+  // defined deleteEvent to emit event to parent component
+  @Output() public deleteEvent = new EventEmitter();
 
   // method to emit event to parent component
-  sendInfoToParent() {
-    this.childEvent.emit('This is the data from child component');
+  delete(id: number) {
+    this.deleteEvent.emit(id);
   }
 }

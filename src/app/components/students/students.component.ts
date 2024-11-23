@@ -22,6 +22,16 @@ export class StudentsComponent {
       name: 'Marry Doe',
       level: 'undergrad',
     },
+    {
+      id: 4,
+      name: 'Tom Doe',
+      level: 'undergrad',
+    },
+    {
+      id: 5,
+      name: 'Jerry Doe',
+      level: 'undergrad',
+    },
   ];
 
   // get array of undergrad students
@@ -34,7 +44,20 @@ export class StudentsComponent {
 
   text: any = '';
 
-  alertMessage(message: string) {
-    this.text = message;
+  deleteStudent(id: number) {
+    // find index of student with id
+    let index = this.students.findIndex((student) => student.id === id);
+    // index is -1 when not matching student is found
+    if (index === -1) {
+      return;
+    }
+
+    // remove student from array
+    this.students.splice(
+      index, // index to start removing
+      1 // delete 1 item
+    );
+    // update undergradStudents array via getUndergrads method
+    this.undergradStudents = this.getUndergrads();
   }
 }
