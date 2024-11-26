@@ -4,7 +4,10 @@
 <undergrads
   [undergradsList]="undergradStudents"
   (deleteEvent)="deleteStudent($event)"
+  [textValue]="text"
 ></undergrads>
+
+<input type="text" [(ngModel)]="text" />
 
 <h2>
   {{ text }}

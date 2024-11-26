@@ -37,6 +37,10 @@ export class StudentsComponent {
   // get array of undergrad students
   public undergradStudents: any = this.getUndergrads();
 
+  constructor() {
+    console.log('StudentsComponent constructor');
+  }
+
   getUndergrads() {
     // filter students by level of undergrad
     return this.students.filter((student) => student.level === 'undergrad');
