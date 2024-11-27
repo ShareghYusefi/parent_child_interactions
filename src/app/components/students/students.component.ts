@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Student } from '../../interfaces/student';
+import { SchoolService } from '../../services/school.service';
 
 @Component({
   selector: 'students',
@@ -6,39 +8,25 @@ import { Component } from '@angular/core';
   styleUrl: './students.component.css',
 })
 export class StudentsComponent {
-  students = [
-    {
-      id: 1,
-      name: 'John Doe',
-      level: 'undergrad',
-    },
-    {
-      id: 2,
-      name: 'Jane Doe',
-      level: 'postgrad',
-    },
-    {
-      id: 3,
-      name: 'Marry Doe',
-      level: 'undergrad',
-    },
-    {
-      id: 4,
-      name: 'Tom Doe',
-      level: 'undergrad',
-    },
-    {
-      id: 5,
-      name: 'Jerry Doe',
-      level: 'undergrad',
-    },
-  ];
+  students: Student[] = [];
 
   // get array of undergrad students
   public undergradStudents: any = this.getUndergrads();
 
-  constructor() {
+  // get instance of SchoolService using dependency injection
+  constructor(private schoolService: SchoolService) {
     console.log('StudentsComponent constructor');
+  }
+
+  // use ngOnInit lifecycle hook to call getStudents method from SchoolService
+  ngOnInit() {
+    // Since getStudents() returns an Observable, we need to subscribe to it for the data
+    this.schoolService.getStudents().subscribe((response) => {
+      // the response should be an array of students
+      this.students = response;
+      // update undergradStudents array via getUndergrads method
+      this.undergradStudents = this.getUndergrads();
+    });
   }
 
   getUndergrads() {

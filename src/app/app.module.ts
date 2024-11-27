@@ -8,6 +8,8 @@ import { UndergradsComponent } from './components/undergrads/undergrads.componen
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { FormsModule } from '@angular/forms';
+import { SchoolService } from './services/school.service';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,7 @@ import { FormsModule } from '@angular/forms';
     NotFoundComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
-  providers: [],
+  providers: [SchoolService, provideHttpClient()], // this allows for dependency injection
   bootstrap: [AppComponent],
 })
 export class AppModule {}
