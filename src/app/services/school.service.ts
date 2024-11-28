@@ -18,4 +18,12 @@ export class SchoolService {
     // We can use < > to specify the type of data we expect to get back
     return this.httpInstance.get<Student[]>(this._schoolURL + 'students');
   }
+
+  // delete student by id
+  deleteStudent(id: number): Observable<Student> {
+    // We can use < > to specify the type of data we expect to get back
+    return this.httpInstance.delete<Student>(
+      this._schoolURL + 'students/' + id
+    );
+  }
 }

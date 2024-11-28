@@ -44,12 +44,24 @@ export class StudentsComponent {
       return;
     }
 
-    // remove student from array
-    this.students.splice(
-      index, // index to start removing
-      1 // delete 1 item
+    // call deleteStudent method from SchoolService
+    this.schoolService.deleteStudent(id).subscribe(
+      (response) => {
+        // find student using id field
+        let student = this.students.find((s) => s.id === response.id);
+        // if student is not found, return
+        if (!student) {
+          return;
+        }
+
+        // remove student from students array
+        this.students.splice(this.students.indexOf(student), 1);
+        // update undergradStudents array via getUndergrads method
+        this.undergradStudents = this.getUndergrads();
+      },
+      (error) => {
+        console.log('Error deleting', error);
+      }
     );
-    // update undergradStudents array via getUndergrads method
-    this.undergradStudents = this.getUndergrads();
   }
 }
