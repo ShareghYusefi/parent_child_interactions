@@ -19,6 +19,11 @@ export class SchoolService {
     return this.httpInstance.get<Student[]>(this._schoolURL + 'students');
   }
 
+  // add student to database
+  addStudent(student: Student): Observable<Student> {
+    return this.httpInstance.post<Student>(this._schoolURL + 'students', student);
+  }
+
   // delete student by id
   deleteStudent(id: number): Observable<Student> {
     // We can use < > to specify the type of data we expect to get back

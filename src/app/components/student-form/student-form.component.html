@@ -1,0 +1,31 @@
+<!-- Bind studentForm using formGroup directive -->
+<!-- ngSubmit event is bound to onSubmit method -->
+<form [formGroup]="studentForm" (ngSubmit)="onSubmit()" class="container mt-3">
+  <div class="mt-2">
+    <label for="name" class="form-label">Name</label>
+    <input id="name" type="text" class="form-control" formControlName="name" />
+    <div class="alert alert-danger" *ngIf="name?.invalid && name?.touched">
+      <div *ngIf="name?.errors?.['required']">Name is required</div>
+    </div>
+  </div>
+  <div class="mt-2">
+    <label for="level" class="form-label">Level</label>
+    <select id="level" class="form-select" formControlName="level">
+      <option value="" selected>Select Level</option>
+      <option value="undergrad">Undergrad</option>
+      <option value="postgrad">Postgrad</option>
+    </select>
+
+    <div class="alert alert-danger" *ngIf="level?.invalid && level?.touched">
+      <div *ngIf="level?.errors?.['required']">Please select a level</div>
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-primary"
+    [disabled]="studentForm.invalid"
+  >
+    Submit
+  </button>
+</form>
