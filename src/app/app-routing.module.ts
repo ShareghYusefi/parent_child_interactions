@@ -3,8 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { StudentsComponent } from './components/students/students.component';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { StudentFormComponent } from './components/student-form/student-form.component';
 
 const routes: Routes = [
+  {
+    path: 'students/:id',
+    component: StudentFormComponent,
+  },
   {
     path: 'students',
     component: StudentsComponent,

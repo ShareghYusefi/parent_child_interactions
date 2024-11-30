@@ -19,9 +19,28 @@ export class SchoolService {
     return this.httpInstance.get<Student[]>(this._schoolURL + 'students');
   }
 
+  // we want a specific student
+  getStudent(id: number): Observable<Student> {
+    return this.httpInstance.get<Student>('students/' + id);
+  }
+
   // add student to database
   addStudent(student: Student): Observable<Student> {
-    return this.httpInstance.post<Student>(this._schoolURL + 'students', student);
+    console.log('school service: ', student);
+
+    // TODO: Figure out why student is passed in as an empty object
+    return this.httpInstance.post<Student>(
+      this._schoolURL + 'students',
+      student
+    );
+  }
+
+  // update student data
+  updateStudent(id: number, updatedStudent: Student): Observable<Student> {
+    return this.httpInstance.patch<Student>(
+      this._schoolURL + 'students/' + id,
+      updatedStudent
+    );
   }
 
   // delete student by id

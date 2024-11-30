@@ -1,7 +1,10 @@
 <h2>Undergrads</h2>
 <ul>
-  <li *ngFor="let undergrad of undergradsList">
+  <li *ngFor="let undergrad of undergradsList" class="mb-2">
     {{ undergrad.name }}
+    <a [routerLink]="['/students', undergrad.id]">
+      <button class="btn btn-primary mr-2">View</button>
+    </a>
     <!-- trigger function to emit data to parent component -->
     <button (click)="delete(undergrad.id)" class="btn btn-danger">
       Delete

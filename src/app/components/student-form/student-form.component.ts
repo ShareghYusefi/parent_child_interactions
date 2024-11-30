@@ -1,23 +1,51 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SchoolService } from '../../services/school.service';
+import { ActivatedRoute } from '@angular/router';
+import { Student } from '../../interfaces/student';
 
 @Component({
   selector: 'student-form',
   templateUrl: './student-form.component.html',
   styleUrl: './student-form.component.css',
 })
-export class StudentFormComponent {
+export class StudentFormComponent implements OnInit {
   studentForm: FormGroup;
 
   // Angular's dependency injection system will inject a FormBuilder instance into the constructor
   constructor(
     private formBuilderInstance: FormBuilder,
-    private schoolService: SchoolService
+    private schoolService: SchoolService,
+    private route: ActivatedRoute
   ) {
     this.studentForm = this.formBuilderInstance.group({
       name: ['', [Validators.required]],
       level: ['', [Validators.required]],
+    });
+  }
+
+  ngOnInit(): void {
+    // get the id of our student
+    this.route.paramMap.subscribe((params) => {
+      // check if id exist
+      let id = params.get('id');
+      if (id) {
+        // get out student from the DB
+        this.schoolService.getStudent(parseInt(id)).subscribe(
+          (student) => {
+            console.log('Get Student', student); // response should a student object
+
+            // update the form with student data
+            this.studentForm.patchValue({
+              name: student.name ?? '', // if left hand is null, use right right value
+              level: student.level ?? '',
+            });
+          },
+          (error) => {
+            console.log('Could not find student data', error);
+          }
+        );
+      }
     });
   }
 
@@ -48,7 +76,7 @@ export class StudentFormComponent {
         this.studentForm.reset();
       },
       (error) => {
-        console.log('Error deleting', error);
+        console.log('Could not add student data', error);
       }
     );
   }
