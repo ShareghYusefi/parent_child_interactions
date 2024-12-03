@@ -10,21 +10,21 @@ import { Student } from '../../interfaces/student';
   styleUrl: './student-form.component.css',
 })
 export class StudentFormComponent implements OnInit {
-  studentForm: FormGroup;
+  studentForm!: FormGroup;
 
   // Angular's dependency injection system will inject a FormBuilder instance into the constructor
   constructor(
     private formBuilderInstance: FormBuilder,
     private schoolService: SchoolService,
     private route: ActivatedRoute
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.studentForm = this.formBuilderInstance.group({
       name: ['', [Validators.required]],
       level: ['', [Validators.required]],
     });
-  }
 
-  ngOnInit(): void {
     // get the id of our student
     this.route.paramMap.subscribe((params) => {
       // check if id exist
@@ -65,19 +65,33 @@ export class StudentFormComponent implements OnInit {
       return;
     }
 
-    console.log('Form submitted', this.studentForm.value);
+    // check if we have an id
+    let id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      // update student data
+      this.schoolService
+        .updateStudent(parseInt(id), this.studentForm.value)
+        .subscribe(
+          (response) => {
+            console.log('Student updated', response);
+          },
+          (error) => {
+            console.log('Could not add student data', error);
+          }
+        );
+    } else {
+      // create new student object with form values
+      this.schoolService.addStudent(this.studentForm.value).subscribe(
+        (response) => {
+          console.log('Student added', response);
 
-    // create new student object with form values
-    this.schoolService.addStudent(this.studentForm.value).subscribe(
-      (response) => {
-        console.log('Student added', response);
-
-        // reset form
-        this.studentForm.reset();
-      },
-      (error) => {
-        console.log('Could not add student data', error);
-      }
-    );
+          // reset form
+          this.studentForm.reset();
+        },
+        (error) => {
+          console.log('Could not add student data', error);
+        }
+      );
+    }
   }
 }

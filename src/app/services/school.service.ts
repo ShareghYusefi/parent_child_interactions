@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class SchoolService {
   // api endpoint for school database
-  private _schoolURL = 'http://localhost:3000/';
+  _schoolUrl = 'http://localhost:3000';
 
   // use dependency inject to work with an instance of HttpClient class
   constructor(private httpInstance: HttpClient) {}
@@ -16,12 +16,12 @@ export class SchoolService {
   // we want an Observable object that will return an array of Students
   getStudents(): Observable<Student[]> {
     // We can use < > to specify the type of data we expect to get back
-    return this.httpInstance.get<Student[]>(this._schoolURL + 'students');
+    return this.httpInstance.get<Student[]>(this._schoolUrl + '/students');
   }
 
   // we want a specific student
   getStudent(id: number): Observable<Student> {
-    return this.httpInstance.get<Student>('students/' + id);
+    return this.httpInstance.get<Student>(this._schoolUrl + '/students/' + id);
   }
 
   // add student to database
@@ -30,7 +30,7 @@ export class SchoolService {
 
     // TODO: Figure out why student is passed in as an empty object
     return this.httpInstance.post<Student>(
-      this._schoolURL + 'students',
+      this._schoolUrl + '/students',
       student
     );
   }
@@ -38,7 +38,7 @@ export class SchoolService {
   // update student data
   updateStudent(id: number, updatedStudent: Student): Observable<Student> {
     return this.httpInstance.patch<Student>(
-      this._schoolURL + 'students/' + id,
+      this._schoolUrl + '/students/' + id,
       updatedStudent
     );
   }
@@ -47,7 +47,7 @@ export class SchoolService {
   deleteStudent(id: number): Observable<Student> {
     // We can use < > to specify the type of data we expect to get back
     return this.httpInstance.delete<Student>(
-      this._schoolURL + 'students/' + id
+      this._schoolUrl + '/students/' + id
     );
   }
 }
