@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class SchoolService {
   // api endpoint for school database
-  _schoolUrl = 'http://localhost:3000';
+  _schoolUrl = 'https://school-project-api-cr3g.onrender.com';
 
   // use dependency inject to work with an instance of HttpClient class
   constructor(private httpInstance: HttpClient) {}
